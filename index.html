@@ -1,17 +1,58 @@
-<!-- index.html (放在项目根目录) -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Plex Image Host</title>
-    <link rel="icon" href="/favicon.ico" />
-  </head>
-  <body>
-    <!-- 这个 div 是 React 应用的挂载点 -->
-    <div id="app"></div>
 
-    <!-- Vite 会自动注入构建后的 JavaScript 文件 -->
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Plex 图床</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"></script>
+  <!-- Font Awesome for icons (optional) -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-900 text-white font-sans">
+
+  <!-- Header -->
+  <header class="bg-gray-800 p-4 shadow-md">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-3xl font-bold">Plex 图床</h1>
+      <div>
+        <!-- Login / Logout button -->
+        <button id="signInBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4">登录</button>
+        <button id="signOutBtn" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded hidden">退出登录</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="container mx-auto p-4">
+    <!-- Upload Section -->
+    <section id="uploadSection" class="mb-8">
+      <h2 class="text-xl font-semibold mb-4">上传图片</h2>
+      <div class="border-2 border-dashed border-gray-500 p-8 text-center cursor-pointer hover:bg-gray-700 rounded-lg">
+        <p class="text-gray-400 mb-4">点击或拖拽文件到这里上传</p>
+        <input type="file" id="fileInput" class="hidden" multiple />
+      </div>
+    </section>
+
+    <!-- Image Gallery Section -->
+    <section id="imageGallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <!-- Images will be dynamically added here by React -->
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-center py-4 mt-8">
+    <p class="text-gray-500">© 2024 Plex 图床 - 所有权利保留</p>
+  </footer>
+
+  <!-- React and App.js -->
+  <div id="app"></div>
+  
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
+
