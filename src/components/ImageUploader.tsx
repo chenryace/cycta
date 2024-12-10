@@ -13,29 +13,37 @@ export const ImageUploader: React.FC = () => {
   const [uploadProgress, setUploadProgress] = useState<UploadProgressItem[]>([]);
 
   const handleDrop = useCallback(async (acceptedFiles: File[]) => {
-    setUploadProgress(acceptedFiles.map(file => ({
+    // 初始化进度条状态
+    const newProgress = acceptedFiles.map(file => ({
       fileName: file.name,
       progress: 0
-    })));
+    }));
+    setUploadProgress(newProgress);
 
     const uploadPromises = acceptedFiles.map(async (file, index) => {
       try {
+        // 压缩图片
         const compressedFile = await compressImage(file);
         const key = `images/${Date.now()}-${file.name}`;
         
         // 模拟上传进度
         const progressInterval = setInterval(() => {
-          setUploadProgress(prev => prev.map((p, i) => 
-            i === index ? { ...p, progress: Math.min(p.progress + 10, 90) } : p
-          ));
+          setUploadProgress(prev => {
+            const updatedProgress = [...prev];
+            updatedProgress[index] = { ...updatedProgress[index], progress: Math.min(updatedProgress[index].progress + 10, 90) };
+            return updatedProgress;
+          });
         }, 200);
 
+        // 上传到 S3
         const url = await uploadToS3(compressedFile, key);
-        
-        clearInterval(progressInterval);
-        setUploadProgress(prev => prev.map((p, i) => 
-          i === index ? { ...p, progress: 100 } : p
-        ));
+
+        clearInterval(progressInterval); // 上传完成，清除进度模拟
+        setUploadProgress(prev => {
+          const updatedProgress = [...prev];
+          updatedProgress[index] = { ...updatedProgress[index], progress: 100 };
+          return updatedProgress;
+        });
 
         return {
           url,
@@ -54,7 +62,10 @@ export const ImageUploader: React.FC = () => {
     const results = await Promise.all(uploadPromises);
     const successfulUploads = results.filter((result): result is UploadedImage => result !== null);
     
+    // 更新上传成功的图片列表
     setUploads(prev => [...successfulUploads, ...prev]);
+
+    // 延迟清除上传进度
     setTimeout(() => setUploadProgress([]), 1000); // 清除进度条
     
     toast.success(`成功上传 ${successfulUploads.length} 张图片`);
