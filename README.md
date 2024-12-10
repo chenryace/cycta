@@ -16,12 +16,12 @@
 在部署之前，需要在Vercel的项目设置中配置以下环境变量：
 
 ```bash
-VITE_AUTH_PASSWORD=     # 访问密码
-VITE_AWS_REGION=       # AWS区域
-VITE_AWS_ACCESS_KEY_ID= # AWS访问密钥ID
-VITE_AWS_SECRET_ACCESS_KEY= # AWS密钥
-VITE_AWS_BUCKET_NAME=  # S3存储桶名称
-VITE_AWS_ENDPOINT=     # S3端点URL
+VITE_AUTH_PASSWORD              =     # 访问密码
+VITE_AWS_REGION                 =       # AWS区域
+VITE_AWS_ACCESS_KEY_ID                 = # AWS访问密钥ID
+VITE_AWS_SECRET_ACCESS_KEY                 = # AWS密钥
+VITE_AWS_BUCKET_NAME                 =  # S3存储桶名称
+VITE_AWS_ENDPOINT                 =     # S3端点URL
 ```
 
 ## 开发
