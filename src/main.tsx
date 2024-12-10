@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App'; // 引入主组件 App.tsx
-import './index.css'; // 引入全局样式 index.css
+import App from './App'; // 确保路径正确
+import './index.css'; // 确保样式文件也被正确引入
 
-// 确保你的 index.html 中有 <div id="app"></div>，这里是挂载点
-const root = ReactDOM.createRoot(document.getElementById('app') as HTMLElement);
+const rootElement = document.getElementById('root') as HTMLElement;
 
-// 渲染 React 应用
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+if (rootElement) {
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );
+}
