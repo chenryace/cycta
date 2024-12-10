@@ -1,12 +1,12 @@
 import React, { useState, useCallback } from 'react';
 import toast from 'react-hot-toast';
-import { compressImage } from '../../utils/imageCompression';
-import { uploadToS3 } from '../../lib/s3';
-import { DropZone } from './DropZone';
-import { ImageList } from './ImageList';
-import { UploadProgress } from './UploadProgress';
-import type { UploadedImage } from '../../types/image';
-import type { UploadProgressItem } from './UploadProgress';
+import { compressImage } from '../utils/imageCompression';
+import { uploadToS3 } from '../lib/s3';
+import { DropZone } from './upload/DropZone';
+import { ImageList } from './upload/ImageList';
+import { UploadProgress } from './upload/UploadProgress';
+import type { UploadedImage } from '../types/image';
+import type { UploadProgressItem } from './upload/UploadProgress';
 
 export const ImageUploader: React.FC = () => {
   const [uploads, setUploads] = useState<UploadedImage[]>([]);
