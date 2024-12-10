@@ -51,8 +51,36 @@
   <!-- React and App.js -->
   <div id="app"></div>
   
-  <script type="module" src="/src/main.tsx"></script>
+  <!-- 修改了以下部分 -->
+  <script type="module">
+    // 在这里挂载 React 应用
+    import { createRoot } from 'react-dom/client';
+    import App from '/src/App.tsx';
+    const root = createRoot(document.getElementById('app'));
+    root.render(<App />);
+    
+    // 监听登录按钮点击事件
+    const signInBtn = document.getElementById('signInBtn');
+    const signOutBtn = document.getElementById('signOutBtn');
+    const loginForm = document.getElementById('loginForm');
+
+    // 模拟登录与退出逻辑
+    signInBtn?.addEventListener('click', () => {
+      // 模拟登录
+      signInBtn.classList.add('hidden');
+      signOutBtn?.classList.remove('hidden');
+      alert('登录成功！');
+      // 触发 App.tsx 中的用户认证
+    });
+
+    signOutBtn?.addEventListener('click', () => {
+      // 模拟退出
+      signOutBtn.classList.add('hidden');
+      signInBtn?.classList.remove('hidden');
+      alert('已成功退出登录');
+      // 触发 App.tsx 中的用户认证
+    });
+  </script>
 </body>
 
 </html>
-
