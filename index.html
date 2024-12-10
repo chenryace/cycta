@@ -6,10 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Plex 图床</title>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"></script>
-  <!-- Font Awesome for icons (optional) -->
-  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- 引入 Vite 动态构建的 CSS 文件 -->
+  <link rel="stylesheet" href="/src/index.css">
 </head>
 
 <body class="bg-gray-900 text-white font-sans">
@@ -19,8 +17,8 @@
     <div class="container mx-auto flex justify-between items-center">
       <h1 class="text-3xl font-bold">Plex 图床</h1>
       <div>
-        <!-- Login / Logout button -->
-        <button id="signInBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4">登录</button>
+        <!-- 登录按钮，由 React 组件控制 -->
+        <button id="signInBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4 hidden">登录</button>
         <button id="signOutBtn" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded hidden">退出登录</button>
       </div>
     </div>
@@ -28,7 +26,7 @@
 
   <!-- Main Content Area -->
   <main class="container mx-auto p-4">
-    <!-- Upload Section -->
+    <!-- 上传区域 -->
     <section id="uploadSection" class="mb-8">
       <h2 class="text-xl font-semibold mb-4">上传图片</h2>
       <div class="border-2 border-dashed border-gray-500 p-8 text-center cursor-pointer hover:bg-gray-700 rounded-lg">
@@ -37,9 +35,9 @@
       </div>
     </section>
 
-    <!-- Image Gallery Section -->
+    <!-- 图片展示区域 -->
     <section id="imageGallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      <!-- Images will be dynamically added here by React -->
+      <!-- 图片会由 React 动态添加到这里 -->
     </section>
   </main>
 
@@ -48,39 +46,12 @@
     <p class="text-gray-500">© 2024 Plex 图床 - 所有权利保留</p>
   </footer>
 
-  <!-- React and App.js -->
+  <!-- React 和 App.js -->
   <div id="app"></div>
+
+  <!-- Vite 编译后的脚本 -->
+  <script type="module" src="/src/main.tsx"></script>
   
-  <!-- 修改了以下部分 -->
-  <script type="module">
-    // 在这里挂载 React 应用
-    import { createRoot } from 'react-dom/client';
-    import App from '/src/App.tsx';
-    const root = createRoot(document.getElementById('app'));
-    root.render(<App />);
-    
-    // 监听登录按钮点击事件
-    const signInBtn = document.getElementById('signInBtn');
-    const signOutBtn = document.getElementById('signOutBtn');
-    const loginForm = document.getElementById('loginForm');
-
-    // 模拟登录与退出逻辑
-    signInBtn?.addEventListener('click', () => {
-      // 模拟登录
-      signInBtn.classList.add('hidden');
-      signOutBtn?.classList.remove('hidden');
-      alert('登录成功！');
-      // 触发 App.tsx 中的用户认证
-    });
-
-    signOutBtn?.addEventListener('click', () => {
-      // 模拟退出
-      signOutBtn.classList.add('hidden');
-      signInBtn?.classList.remove('hidden');
-      alert('已成功退出登录');
-      // 触发 App.tsx 中的用户认证
-    });
-  </script>
 </body>
 
 </html>
