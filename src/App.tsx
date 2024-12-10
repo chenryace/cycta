@@ -6,16 +6,20 @@ import { Button } from './components/ui/Button';
 import toast, { Toaster } from 'react-hot-toast';
 
 function App() {
-  const { isAuthenticated, signOut, signIn } = useAuthStore();
+  const { isAuthenticated, signOut, login, isLoading, error } = useAuthStore();
 
   const handleSignOut = async () => {
     await signOut();
     toast.success('已成功退出登录');
   };
 
-  const handleSignIn = async () => {
-    await signIn();
-    toast.success('已成功登录');
+  const handleSignIn = async (inputPassword: string) => {
+    login(inputPassword);
+    if (isAuthenticated) {
+      toast.success('已成功登录');
+    } else {
+      toast.error(error || '登录失败');
+    }
   };
 
   useEffect(() => {
@@ -41,7 +45,7 @@ function App() {
             <Button
               id="signInBtn"
               variant="primary"
-              onClick={handleSignIn}
+              onClick={() => handleSignIn('your-password-here')} // 在这里传入密码
               className="hidden"
             >
               登录
@@ -67,7 +71,7 @@ function App() {
           </div>
         ) : (
           <div className="bg-gray-800 p-6 rounded-lg shadow-md">
-            <LoginForm />
+            <LoginForm onSubmit={handleSignIn} />
           </div>
         )}
       </div>
