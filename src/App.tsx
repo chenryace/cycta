@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { LoginForm } from './components/auth/LoginForm';
 import { ImageUploader } from './components/upload/ImageUploader';
 import { useAuthStore } from './store/authStore';
@@ -6,26 +6,55 @@ import { Button } from './components/ui/Button';
 import toast, { Toaster } from 'react-hot-toast';
 
 function App() {
-  const { isAuthenticated, signOut } = useAuthStore();
+  const { isAuthenticated, signOut, signIn } = useAuthStore();
 
   const handleSignOut = async () => {
     await signOut();
     toast.success('已成功退出登录');
   };
 
+  const handleSignIn = async () => {
+    await signIn();
+    toast.success('已成功登录');
+  };
+
+  useEffect(() => {
+    // 页面加载时检查用户认证状态
+    if (isAuthenticated) {
+      document.getElementById('signInBtn')?.classList.add('hidden');
+      document.getElementById('signOutBtn')?.classList.remove('hidden');
+    } else {
+      document.getElementById('signInBtn')?.classList.remove('hidden');
+      document.getElementById('signOutBtn')?.classList.add('hidden');
+    }
+  }, [isAuthenticated]);
+
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <Toaster position="top-right" />
-      
+
       <div className="max-w-4xl mx-auto px-4 py-8">
         <header className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold">Plex 图床</h1>
-          
-          {isAuthenticated && (
-            <Button variant="danger" onClick={handleSignOut}>
+          <div>
+            {/* 动态显示登录和退出按钮 */}
+            <Button
+              id="signInBtn"
+              variant="primary"
+              onClick={handleSignIn}
+              className="hidden"
+            >
+              登录
+            </Button>
+            <Button
+              id="signOutBtn"
+              variant="danger"
+              onClick={handleSignOut}
+              className="hidden"
+            >
               退出登录
             </Button>
-          )}
+          </div>
         </header>
 
         {isAuthenticated ? (
